@@ -1,4 +1,4 @@
-from openai import OpenAI # 音声認識した文字の要約で利用するOpenAIをインポート
+import openai # 音声認識した文字の要約で利用するOpenAIをインポート
 import speech_recognition as sr # 音声認識の機能をインポート
 from audio_recorder_streamlit import audio_recorder # streamlit内でオーディオを録音するための機能をインポート
 import datetime
@@ -26,7 +26,7 @@ def file_speech_to_text(audio_file):
 
 # 音声認識した内容を要約する機能の設定
 api_key = st.secrets['openai']['api_key']
-OpenAI.api_key = api_key # 環境変数化したAPIキーの読み込み
+openai.api_key = api_key # 環境変数化したAPIキーの読み込み
 
 # chatGPTにリクエストするための関数を設定。引数には書いてほしい内容と最大文字数を指定
 def summarize_text(input_text, set_customer, content_maxStr_to_gpt):
@@ -34,7 +34,7 @@ def summarize_text(input_text, set_customer, content_maxStr_to_gpt):
     today = datetime.datetime.now()  # 本日の日付を取得
     today_str = today.strftime("%Y-%m-%d")  # YYYY-MM-DD 形式の文字列に変換
     # client.chat.completions.createでchatGPTにリクエスト。オプションとしてmodelにAIモデル、messagesに内容を指定
-    responce = OpenAI.chat.completions.create(
+    responce = openai.chat.completions.create(
         model= 'gpt-4o-mini',
         messages=[
             {
